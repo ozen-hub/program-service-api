@@ -22,6 +22,8 @@ public class ProgramServiceImpl implements ProgramService {
                 .subjects(programDto.getSubjects())
                 .build();
 
+        // get All subjects and need to check if there are available or not
+
         programRepository.save(program);
     }
 }
