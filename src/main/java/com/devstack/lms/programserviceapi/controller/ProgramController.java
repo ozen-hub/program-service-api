@@ -16,6 +16,24 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class ProgramController {
 
+    /*
+    *
+    * {
+    "name":"Fullstak Development Program",
+    "price":50000,
+    "startDate":"2024-03-20",
+    "subjects":[
+        {"id":1,"name":"Java"},
+        {"id":2,"name":"Html"},
+        {"id":3,"name":"Css"},
+        {"id":4,"name":"Java Script"},
+        {"id":1,"name":"C#"}
+    ]
+}
+    *
+    *
+    *
+    * */
 
     private final ProgramService programService;
 
