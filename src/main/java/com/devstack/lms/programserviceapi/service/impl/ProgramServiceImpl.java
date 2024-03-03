@@ -9,7 +9,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -27,13 +29,17 @@ public class ProgramServiceImpl implements ProgramService {
                 .subjects(programDto.getSubjects())
                 .build();
 
-        List<Long> ids = program.getSubjects().stream()
-                        .map(Subject::getId).toList();
+        ArrayList<Long> list = new ArrayList<>();
+        for (Subject sub:program.getSubjects()
+             ) {
+            list.add(sub.getId());
+        }
+
+        String ids =  list.stream().map(Object::toString).collect(Collectors.joining(", "));
 
         System.out.println(ids);
 
-        Boolean isOk = webClient.get().uri("http://localhost:8082/api/v1/subjects",
-                uriBuilder -> uriBuilder.pathSegment(String.valueOf(ids)).build())
+        Boolean isOk = webClient.get().uri("http://localhost:8082/api/v1/subjects/{id}",ids)
                         .retrieve()
                                 .bodyToMono(Boolean.class)
                                         .block();
