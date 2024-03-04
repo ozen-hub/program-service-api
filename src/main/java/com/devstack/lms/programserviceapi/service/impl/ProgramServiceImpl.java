@@ -1,6 +1,7 @@
 package com.devstack.lms.programserviceapi.service.impl;
 
 import com.devstack.lms.programserviceapi.dto.request.RequestProgramDto;
+import com.devstack.lms.programserviceapi.dto.response.ResponseProgramDto;
 import com.devstack.lms.programserviceapi.entity.Program;
 import com.devstack.lms.programserviceapi.entity.Subject;
 import com.devstack.lms.programserviceapi.repo.ProgramRepository;
@@ -39,7 +40,7 @@ public class ProgramServiceImpl implements ProgramService {
 
         System.out.println(ids);
 
-        Boolean isOk = webClient.get().uri("http://localhost:8082/api/v1/subjects/{id}",ids)
+        Boolean isOk = webClient.get().uri("http://localhost:9090/subject-service-api/api/v1/subjects/{id}",ids)
                         .retrieve()
                                 .bodyToMono(Boolean.class)
                                         .block();
@@ -50,5 +51,18 @@ public class ProgramServiceImpl implements ProgramService {
             throw new IllegalArgumentException("Try again with available Languages");
         }
 
+    }
+
+    @Override
+    public List<ResponseProgramDto> findAllPrograms() {
+        List<Program> all = programRepository.findAll();
+        List<ResponseProgramDto> list = new ArrayList<>();
+        for (Program p:all
+             ) {
+            list.add(new ResponseProgramDto(
+                    p.getId(),p.getName(),p.getPrice(),p.getStartDate(),p.getSubjects()
+            ));
+        }
+        return list;
     }
 }
