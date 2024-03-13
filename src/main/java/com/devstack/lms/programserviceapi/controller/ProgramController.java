@@ -49,7 +49,7 @@ public class ProgramController {
     private ResponseEntity<StandardResponse> findAllPrograms() {
         ;
         return new ResponseEntity<>(
-                new StandardResponse(200, "Program was Saved!",
+                new StandardResponse(200, "lis of programs!",
                         programService.findAllPrograms()),
                 HttpStatus.OK
         );
