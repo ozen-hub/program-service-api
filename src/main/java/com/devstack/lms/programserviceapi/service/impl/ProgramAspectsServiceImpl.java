@@ -11,10 +11,9 @@ public class ProgramAspectsServiceImpl {
 
     private final WebClient webClient;
 
-    int count;
+
     @CircuitBreaker(name="subjectService", fallbackMethod = "fallbackMethod")
     public Boolean checkSubjects(String ids){
-        System.out.println("count : "+count++);
         return webClient.get().uri("http://localhost:9090/api/v1/subjects/{id}",ids)
                 .retrieve()
                 .bodyToMono(Boolean.class)
@@ -22,8 +21,6 @@ public class ProgramAspectsServiceImpl {
     }
 
     public Boolean fallbackMethod(String ids, Exception e){
-        System.out.println("Failed");
-        System.out.println("Count : "+count);
         return false;
     }
 }
