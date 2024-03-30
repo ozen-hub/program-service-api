@@ -63,4 +63,17 @@ public class ProgramServiceImpl implements ProgramService {
         }
         return list;
     }
+
+    @Override
+    public List<ResponseProgramDto> findAllMyPrograms(String email) {
+        List<Program> all = programRepository.findAll();
+        List<ResponseProgramDto> list = new ArrayList<>();
+        for (Program p:all
+        ) {
+            list.add(new ResponseProgramDto(
+                    p.getId(),p.getName(),p.getPrice(),p.getStartDate(),p.getSubjects()
+            ));
+        }
+        return list;
+    }
 }

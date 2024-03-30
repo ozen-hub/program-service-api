@@ -14,7 +14,7 @@ public class ProgramAspectsServiceImpl {
 
     @CircuitBreaker(name="subjectService", fallbackMethod = "fallbackMethod")
     public Boolean checkSubjects(String ids){
-        return webClient.get().uri("http://localhost:9090/api/v1/subjects/{id}",ids)
+        return webClient.get().uri("http://localhost:8082/api/v1/subjects/{id}",ids)
                 .retrieve()
                 .bodyToMono(Boolean.class)
                 .block();
